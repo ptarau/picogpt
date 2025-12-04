@@ -111,6 +111,9 @@ RL aligns the model with executable truth, not just textual plausibility.
 That is why RL-tuned coders improve fastest where it matters most: passing new tests, integrating unfamiliar libraries, and fixing their own mistakes.
 """
 
+with open("triples.tsv","r") as f:
+    data_text=f.read()
+
 X_all = encode(data_text)  # a single long stream of token ids, shape (N,)
 N = X_all.numel()
 assert N > 200, f"Corpus too short after BPE: {N} tokens. Add more text."
@@ -460,7 +463,7 @@ for it in range(train_steps):
 # 8) Sampling from a prompt
 # ============================================================
 model.eval()
-prompt = "RL aligns the model"
+prompt = "non_monotonic_logic"
 start_ids = encode(prompt).unsqueeze(0).to(device)  # (1, T0)
 
 with torch.no_grad():
