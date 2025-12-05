@@ -1,8 +1,8 @@
 from picogpt import PicoGPT
 
 picoGPT = PicoGPT()
-picoGPT.load_model("data/corpus.pt")
-answer = picoGPT.ask("RL aligns the model")
+picoGPT.load_model("data/triples.pt")
+answer = picoGPT.ask("at_risk_of_being_replaced_by")
 print(answer)
 while True:
     prompt = input(":--> ")

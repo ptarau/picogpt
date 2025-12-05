@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "picogpt"
-version = "0.1.0"
+version = "0.1.1"
 description = "A tiny GPT with tiktoken BPE and RoPE (auto-extend), CUDA/MPS/CPU aware."
 authors = [{ name = "Your Name", email = "you@example.com" }]
 readme = "README.md"
