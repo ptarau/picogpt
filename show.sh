@@ -1,0 +1,1 @@
+python -c "from picogpt import PicoGPT; PicoGPT().info()"

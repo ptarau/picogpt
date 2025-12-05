@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "picogpt"
+version = "0.1.0"
+description = "A tiny GPT with tiktoken BPE and RoPE (auto-extend), CUDA/MPS/CPU aware."
+authors = [{ name = "Your Name", email = "you@example.com" }]
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = [
+  "numpy==1.26.4",
+  "torch>=2.1",
+  "tiktoken>=0.7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ptarau/picogpt"

@@ -1,30 +1,58 @@
 # picogpt
 
-Small scale GPT-like transformer stack, runnable on any PC or Mac.
+A tiny GPT with tiktoken BPE and RoPE (auto-extend), with a simple class API.
 
-Run it with:
-
-```
-python3 picogpt.py
-```
-
-Features:
-
-- A minimal, readable GPT-style Transformer for next-token prediction.
+- Minimal, readable GPT-style Transformer for next-token prediction.
 - Tokenization with a production-grade BPE (tiktoken `cl100k_base`).
 - Device selection: prefers CUDA (with mixed precision), else MPS, else CPU.
 - A single-stream language-modeling dataset with random (x, y) slices.
 - Short training run and autoregressive sampling from a prompt.
 
-Dependencies: *numpy, torch,tiktoken*
+Dependencies: *numpy, torch, tiktoken*
 
-Edit picochat.py to adjust these parameters:
+## Install
 
-- block_size=64: short context keeps attention's O(T^2) cost tiny.
-- n_embd=96, n_head=3 -> head_size=32: small matrices; n_embd % n_head == 0.
-- n_layer=2: deeper than 1 for noticeable gains, still fast on CPU.
-- dropout=0.1: light regularization; can set to 0.0 for raw speed.
-- learning_rate=3e-3 with AdamW: simple, robust default.
+```bash
+pip install picogpt
 
-Enjoy,
-Paul Tarau (and GPT5-thinking)
+pip install build
+python -m build
+pip install dist/picogpt-*.whl
+
+from picogpt import PicoGPT
+
+picoGPT = PicoGPT()  # defaults: tiny model, CUDA/MPS/CPU auto-detect
+
+# Train on your text file
+picoGPT.train_with_file("corpus.txt")
+
+# Save / load
+picoGPT.save_model("out/pico.pt")
+picoGPT.load_model("out/pico.pt")
+
+# Inspect
+picoGPT.info()
+
+# Inference
+answer = picoGPT.ask("RL aligns the model")
+print(answer)
+
+# defaults
+
+PicoGPT(
+  block_size=64, n_embd=96, n_head=3, n_layer=2, dropout=0.1, rope_base=10000.0,
+  batch_size=48, train_steps=600, learning_rate=3e-3, seed=0,
+  tokenizer_name="cl100k_base", max_new_tokens=200, temperature=0.9, top_k=50,
+  device="auto", amp=True
+)
+
+
+---
+
+## Publish to PyPI (quick guide)
+
+```bash
+# from the project root (where pyproject.toml lives)
+python -m pip install --upgrade build twine
+python -m build
+twine upload dist/*
