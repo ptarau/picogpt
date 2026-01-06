@@ -209,5 +209,6 @@ __marimo__/
 OLD
 out
 in
-data
+data/
 *.pt
+scratch/
